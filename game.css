@@ -1,0 +1,33 @@
+// Fundo da simulação
+.game-root {
+    -fx-background-color: #faf8ef;
+}
+
+// Botões de fundo
+.game-button {
+  -fx-background-color: green;
+}
+
+// Estrada
+.game-button-road {
+    -fx-background-color: #586069;
+}
+
+// Calçada
+.game-button-pedestrian{
+    -fx-background-color: #cdc1b4;
+}
+
+// Agente
+.game-button-agent{
+    -fx-background-color: #ee6e73;
+    -fx-background-image: url("agent.png");
+    -fx-background-position: center;
+}
+
+// Carro
+.game-button-car{
+    -fx-background-color: cornflowerblue;
+    -fx-background-image: url("car.png");
+    -fx-background-position: center;
+}
