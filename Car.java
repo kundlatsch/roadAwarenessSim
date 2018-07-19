@@ -201,6 +201,10 @@ public class Car {
 		this.location.setY(y);
 	}
 	
+	public Coordinates getPosition() {
+		return this.location;
+	}
+	
 	public int getX() {
 		return this.location.getX();
 	}

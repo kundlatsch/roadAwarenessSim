@@ -14,7 +14,11 @@ public class City extends jason.environment.Environment {
 	public static boolean moveCar = false;
 	public static boolean carRight = false;
 	public static boolean carLeft = false;
-	public static Coordinates carPosition;
+	public static Coordinates carPosition = new Coordinates(0,0);
+	public static Coordinates agentPosition = new Coordinates(6,6);
+	
+	// Range de visão do agente
+	private static int range = 3;
 	
 	public static final Literal    cl = Literal.parseLiteral("car(left)");
     public static final Literal    cr = Literal.parseLiteral("car(right)");
@@ -27,9 +31,10 @@ public class City extends jason.environment.Environment {
     private GUI gui;
     @Override
     public void init(String[] args) {
-		
+		// A interface roda em uma thread separada para a arquitetura
+		// do Jason rodar em background
 		new Thread() {
-         
+        
         @Override
         public void run() {
 				gui.startEnvironment();
@@ -41,10 +46,6 @@ public class City extends jason.environment.Environment {
     
     @Override
     synchronized public boolean executeAction(String ag, Structure action) {
-		if(firstExec) {
-			firstExec = false;
-		}
-		
 		System.out.println(ag + ".asl executing: " + action);
 		if (action.getFunctor().equals("move")) {
 			changeToLeft = true;
@@ -55,21 +56,29 @@ public class City extends jason.environment.Environment {
 		moveCar = true;
 		updateAllPercepts();
 		try {
-          Thread.sleep(500);
+          Thread.sleep(750);
         } catch (Exception e) {}
         return true;
     }
 
     private void updateAllPercepts() {
-       clearPercepts();
-       if(carLeft){
-		   addPercept(cl);
-		   carLeft = false;
-	   }
-	   else if(carRight) {
-		   addPercept(cr);
-		   carRight = false;
+		clearPercepts();
+	   if(inRage()){
+		   	System.out.println("inRage worked");
+		   	System.out.println("carLeft: " + carLeft + " carRight: " + carRight);
+		   	if(carPosition.getY() == 5) {
+				addPercept(cr);
+			}
+			else if(carPosition.getY() == 6) {
+				addPercept(cl);
+			}   	
 	   }
     }
+	
+	private boolean inRage()  {
+		if(((carPosition.getX() >= agentPosition.getX() - range) || (carPosition.getX() <= agentPosition.getX() + range)) && (carPosition.getY() == 5 || carPosition.getY() == 6))
+			return true;
+		return false;
+	}
     
 }

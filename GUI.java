@@ -58,10 +58,8 @@ public class GUI extends Application {
 					if(City.changeToLeft) {
 						moveAgent(0);
 						City.changeToLeft = false;
-						System.out.println("moveu");
 					}
 					if(City.changeToRight) {
-						System.out.println("kk eae man");
 						moveAgent(1);
 						City.changeToRight = false;
 					}
@@ -72,12 +70,7 @@ public class GUI extends Application {
 					
 					// Percepts
 					
-					if(car.getX() == 4 || car.getY() == 7) {
-						City.carLeft = true;
-					}
-					if(car.getX() == 8 || car.getY() == 6) {
-						City.carRight = true;
-					}
+					
 					
 					try { Thread.sleep (50); } catch (InterruptedException ex) {}
 				}
@@ -168,7 +161,12 @@ public class GUI extends Application {
 	public void moveCar() {
 		root.getChildren().get(getButton(car.getX(),car.getY())).getStyleClass().remove("game-button-car");
 		car.move();
+		City.carPosition = car.getPosition();
 		root.getChildren().get(getButton(car.getX(),car.getY())).getStyleClass().add("game-button-car");
+	}
+	
+	public Car getCar() {
+		return this.car;
 	}
 
 
